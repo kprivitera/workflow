@@ -1,3 +1,5 @@
 body {
   background-color: #fff;
+  -webkit-transition: background-color 2.2s;
+  transition: background-color 2.2s;
 }

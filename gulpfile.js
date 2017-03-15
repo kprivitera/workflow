@@ -1,9 +1,9 @@
 //add gulp
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var autoprefixer = require('gulp-autoprefixer');
 
 var SOURCEPATHS = {
 	sassSource : 'src/scss/*.scss'
@@ -18,6 +18,7 @@ var APPPATH = {
 gulp.task('sass', function(){
 	//look at the file in this folder
 	return gulp.src(SOURCEPATHS.sassSource)
+	.pipe(autoprefixer())
 	//compile it to css to this folder
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 	.pipe(gulp.dest(APPPATH.css))
