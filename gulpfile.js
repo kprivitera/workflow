@@ -4,8 +4,10 @@ var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
+var browserify = require('gulp-browserify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
+var merge = require('merge-stream');
 
 var SOURCEPATHS = {
 	sassSource : 'src/scss/*.scss',
@@ -32,19 +34,25 @@ gulp.task('clean-scripts', function(){
 });
 
 gulp.task('sass', function(){
+
+	var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
 	//look at the file in this folder
-	return gulp.src(SOURCEPATHS.sassSource)
+	sassFiles = gulp.src(SOURCEPATHS.sassSource)
 	//add autoprefixer
 	.pipe(autoprefixer())
 	//compile it to css to this folder
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+	
 	//save file in destination
-	.pipe(gulp.dest(APPPATH.css))
+	return merge(sassFiles, bootstrapCSS)
+		.pipe(concat('app.css'))
+		.pipe(gulp.dest(APPPATH.css))
 });
 
 gulp.task('scripts', ['clean-scripts'], function(){
 	gulp.src(SOURCEPATHS.jsSource)
 	.pipe(concat('main.js'))
+	.pipe(browserify())
 	.pipe(gulp.dest(APPPATH.js))
 })
 
