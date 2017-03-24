@@ -44,6 +44,11 @@ gulp.task('clean-scripts', function(){
 	.pipe(clean());
 });
 
+gulp.task('clean-images', function() {
+	return gulp.src(APPPATH.img + '/**', {read: false, force: true })
+		.pipe(clean());
+});
+
 gulp.task('sass', function(){
 	var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
 	//look at the file in this folder
@@ -59,7 +64,7 @@ gulp.task('sass', function(){
 		.pipe(gulp.dest(APPPATH.css))
 });
 
-gulp.task('images', function(){
+gulp.task('images', ['clean-images'], function(){
 	return gulp.src(SOURCEPATHS.imgSource)
 	//will check that the image is in the app folder and if its new copy it
 	.pipe(newer(APPPATH.img))
