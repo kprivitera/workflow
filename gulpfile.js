@@ -52,7 +52,7 @@ gulp.task('clean-images', function() {
 gulp.task('sass', function(){
 	var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
 	//look at the file in this folder
-	sassFiles = gulp.src(SOURCEPATHS.sassSource)
+	var sassFiles = gulp.src(SOURCEPATHS.sassSource)
 	//add autoprefixer
 	.pipe(autoprefixer())
 	//compile it to css to this folder
