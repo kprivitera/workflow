@@ -6,6 +6,7 @@ var reload = browserSync.reload;
 var autoprefixer = require('gulp-autoprefixer');
 var browserify = require('gulp-browserify');
 var clean = require('gulp-clean');
+var del = require('del');
 var concat = require('gulp-concat');
 var merge = require('merge-stream');
 var newer = require('gulp-newer');
@@ -45,8 +46,7 @@ gulp.task('clean-scripts', function(){
 });
 
 gulp.task('clean-images', function() {
-	return gulp.src(APPPATH.img + '/**', {read: false, force: true })
-		.pipe(clean());
+  return del(APPPATH.img + './**');
 });
 
 gulp.task('sass', function(){
@@ -98,6 +98,7 @@ gulp.task('compresscss', function(){
 
 	var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
 	//look at the file in this folder
+	var sassFiles;
 	sassFiles = gulp.src(SOURCEPATHS.sassSource)
 		//add autoprefixer
 		.pipe(autoprefixer())
